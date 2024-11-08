@@ -12,8 +12,7 @@ interface ArticleCardProps {
 const ArticleCard = ({ article }: ArticleCardProps) => {
   const {
     publishedAt,
-    state,
-    stateId,
+    states,
     views,
     authorName,
     author,
@@ -29,14 +28,19 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
       <div className={'flex-between'}>
         <div className={'flex-col'}>
           <p className={'article_card_date'}>{formatDate(publishedAt)}</p>
-          <Link
-            href={{ pathname: '/', query: { state: state?.name } }}
-            title={state?.name}
-          >
-            <span className={'text-12-light'}>
-              {state?.name || stateId || 'NA'}
-            </span>
-          </Link>
+          {states?.map((state, index) => (
+            <React.Fragment key={state.id}>
+              {index < 2 ? (
+                <Link
+                  href={{ pathname: '/', query: { state: state.name } }}
+                  title={state.name}
+                >
+                  <span className={'text-12-light mr-2'}>{state.name}</span>
+                </Link>
+              ) : null}
+            </React.Fragment>
+          ))}
+          {states && states?.length > 2 && <span>...</span>}
         </div>
         <div className={'flex gap-1.5 items-center self-start'}>
           <EyeIcon className={'size-6 text-primary'} />

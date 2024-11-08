@@ -42,7 +42,7 @@ const ArticleDetails = async ({
               className={'rounded-xl'}
             />
             {article.link && (
-              <Link href={article.link}>
+              <Link href={article.link} target={'_blank'}>
                 <p
                   className={
                     'mt-5 text-center text-white bg-primary py-2 px-4 rounded-md'
@@ -72,7 +72,19 @@ const ArticleDetails = async ({
             </CardInfoContent>
 
             <CardInfoContent heading={'State'}>
-              <span>{article.state?.name || 'No state'}</span>
+              <>
+                {article.states ? (
+                  <div className={'flex gap-3'}>
+                    {article.states.map((state) => (
+                      <span key={state.id} className={'topic-tag'}>
+                        {state.name}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <span>No topics</span>
+                )}
+              </>
             </CardInfoContent>
 
             <CardInfoContent heading={'Author'}>

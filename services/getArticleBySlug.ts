@@ -8,7 +8,7 @@ export const getArticleBySlug = async (
     const article = await prisma.article.findUnique({
       where: { slug },
       include: {
-        state: true,
+        states: true,
         topics: true,
       },
     });

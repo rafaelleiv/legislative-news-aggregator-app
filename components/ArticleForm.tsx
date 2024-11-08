@@ -57,24 +57,23 @@ const ArticleForm = ({
 
       await formSchema.parseAsync(formValues);
 
-      // const result = await postArticle(formValues as InputArticle);
-      // if (result.status === 201) {
-      //   toast({
-      //     title: 'Article created',
-      //     description: 'The article has been created successfully',
-      //     variant: 'default',
-      //   });
-      //
-      //   router.push(`/article/${result.data.slug}`);
-      //
-      //   return {
-      //     ...prevState,
-      //     status: 'SUCCESS',
-      //   };
-      // }
-      console.log('cleaning form');
-      setSelectedStates([]);
-      setSelectedTopics([]);
+      const result = await postArticle(formValues as InputArticle);
+      if (result.status === 201) {
+        toast({
+          title: 'Article created',
+          description: 'The article has been created successfully',
+        });
+
+        setSelectedStates([]);
+        setSelectedTopics([]);
+
+        router.push(`/news/${result.data.slug}`);
+
+        return {
+          ...prevState,
+          status: 'SUCCESS',
+        };
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors = error.flatten().fieldErrors;

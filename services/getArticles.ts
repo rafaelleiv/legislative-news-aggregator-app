@@ -16,13 +16,15 @@ export async function getArticles(searchParams: {
         slug: searchParams.query
           ? { contains: searchParams.query.toLowerCase() }
           : undefined,
-        state: searchParams.state ? { name: searchParams.state } : undefined,
+        states: searchParams.state
+          ? { some: { name: searchParams.state } }
+          : undefined,
         topics: searchParams.topic
           ? { some: { name: searchParams.topic } }
           : undefined,
       },
       include: {
-        state: true,
+        states: true,
         topics: {
           select: {
             id: true,
