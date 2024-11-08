@@ -14,8 +14,8 @@ const Navbar = async () => {
   return (
     <header className={'px-5 py-3 bg-white shadow-sm font-work-sans'}>
       <nav className={'flex justify-between items-center'}>
-        <div className={'flex flex-col md:flex-row'}>
-          <Link href={'/public'}>
+        <Link href={'/'}>
+          <div className={'flex flex-col md:flex-row'}>
             <Image
               src={'/logo.png'}
               alt={'Logo'}
@@ -23,11 +23,12 @@ const Navbar = async () => {
               height={30}
               priority
             />
-          </Link>
-          <h1 className={'hidden sm:block md:text-2xl px-3'}>
-            Legislative News
-          </h1>
-        </div>
+
+            <h1 className={'hidden sm:block md:text-2xl px-3'}>
+              Legislative News
+            </h1>
+          </div>
+        </Link>
 
         <div className={'flex items-center gap-5 text-black'}>
           {session && session.user ? (

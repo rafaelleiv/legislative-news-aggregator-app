@@ -32,7 +32,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
             <React.Fragment key={state.id}>
               {index < 2 ? (
                 <Link
-                  href={{ pathname: '/', query: { state: state.name } }}
+                  href={{ pathname: '/', query: { query: state.name } }}
                   title={state.name}
                 >
                   <span className={'text-12-light mr-2'}>{state.name}</span>
@@ -66,7 +66,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
                 topics.map((topic, index) => (
                   <React.Fragment key={topic.id}>
                     <Link
-                      href={{ pathname: '/', query: { topic: topic.name } }}
+                      href={{ pathname: '/', query: { query: topic.name } }}
                     >
                       <span className={'text-14-normal-black'}>
                         {topic.name}

@@ -6,14 +6,12 @@ import validator from 'validator';
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string; topic?: string; state?: string }>;
+  searchParams: Promise<{ query?: string }>;
 }) {
-  const { query, topic, state } = (await searchParams) || {};
+  const { query } = (await searchParams) || {};
 
   // Sanitize the query, topic, and state
   const sanitizedQuery = validator.escape(query || '');
-  const sanitizedTopic = validator.escape(topic || '');
-  const sanitizedState = validator.escape(state || '');
 
   return (
     <>
@@ -40,8 +38,6 @@ export default async function Home({
         <ArticleList
           searchParams={{
             query: sanitizedQuery,
-            topic: sanitizedTopic,
-            state: sanitizedState,
           }}
         />
       </section>

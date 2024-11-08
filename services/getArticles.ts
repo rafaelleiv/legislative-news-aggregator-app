@@ -2,27 +2,30 @@ import prisma from '@/lib/prisma';
 
 export async function getArticles(searchParams: {
   query?: string;
-  state?: string;
-  topic?: string;
   page?: number;
   pageSize?: number;
 }) {
   try {
     searchParams.page = searchParams?.page || 1;
     searchParams.pageSize = searchParams?.pageSize || 10;
+    const query = searchParams.query || '';
+
+    const whereClause = {
+      OR: [
+        query ? { slug: { contains: query.toLowerCase() } } : null,
+        query ? { states: { some: { name: query } } } : null,
+        query ? { topics: { some: { name: query } } } : null,
+        // searchParams.state
+        //   ? { states: { some: { name: searchParams.state } } }
+        //   : null,
+        // searchParams.topic
+        //   ? { topics: { some: { name: searchParams.topic } } }
+        //   : null,
+      ].filter((condition) => condition !== null),
+    };
 
     const articles = await prisma.article.findMany({
-      where: {
-        slug: searchParams.query
-          ? { contains: searchParams.query.toLowerCase() }
-          : undefined,
-        states: searchParams.state
-          ? { some: { name: searchParams.state } }
-          : undefined,
-        topics: searchParams.topic
-          ? { some: { name: searchParams.topic } }
-          : undefined,
-      },
+      where: whereClause.OR.length > 0 ? whereClause : undefined, // solo aplica el filtro si OR tiene condiciones
       include: {
         states: true,
         topics: {
@@ -46,7 +49,6 @@ export async function getArticles(searchParams: {
     return articles;
   } catch (err) {
     console.error(err, 'Error fetching articles');
-
     return [];
   }
 }

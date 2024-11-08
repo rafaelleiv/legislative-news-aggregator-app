@@ -7,8 +7,6 @@ const ArticleList = async ({
 }: {
   searchParams: {
     query?: string;
-    state?: string;
-    topic?: string;
     page?: number;
     pageSize?: number;
   };
