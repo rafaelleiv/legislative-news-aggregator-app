@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator typescriptInterfaces {
+  provider = "prisma-generator-typescript-interfaces"
+  prettier = true
+}
+
+model Article {
+  id          Int      @id @default(autoincrement())
+  title       String
+  publishedAt DateTime
+  summary     String?
+  link        String?
+  topics      Topic[]  @relation("ArticleTopics")
+  states      State[]  @relation("ArticleStates")
+  authorId    Int?
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorName  String?
+  views       Int      @default(0)
+  image       String?
+  slug        String   @unique
+}
+
+model State {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  code            String            @unique
+  articles        Article[]         @relation("ArticleStates")
+  userPreferences UserPreferences[]
+}
+
+model Topic {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  articles        Article[]         @relation("ArticleTopics")
+  userPreferences UserPreferences[]
+}
+
+model User {
+  id          Int              @id @default(autoincrement())
+  email       String           @unique
+  name        String?
+  image       String?
+  preferences UserPreferences?
+  articles    Article[] // Relación para los artículos creados por el usuario
+}
+
+model UserPreferences {
+  id          Int     @id @default(autoincrement())
+  userId      Int     @unique
+  savedStates State[]
+  savedTopics Topic[]
+  user        User    @relation(fields: [userId], references: [id])
+}

@@ -1,5 +1,6 @@
 import React from 'react';
-import Navbar from '@/app/components/Navbar';
+import Navbar from '@/components/Navbar';
+import { Toaster } from '@/components/ui/toaster';
 
 const Layout = ({
   children,
@@ -10,6 +11,7 @@ const Layout = ({
     <main className={'font-work-sans'}>
       <Navbar />
       {children}
+      <Toaster />
     </main>
   );
 };

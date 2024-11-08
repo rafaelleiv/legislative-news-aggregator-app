@@ -20,6 +20,29 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Migrations / Seeds in Prisma ORM
+All these commands automatically generate typescript interfaces for the database schema
+in [prisma/interfaces.ts](prisma/interfaces.ts)
+
+Prisma schema is in [prisma/schema.prisma](prisma/schema.prisma)
+
+Main file of seeds is [prisma/seed.ts](prisma/seed.ts)
+
+```bash
+# create a new migration
+npx prisma migrate dev --name init
+
+# reset migrations also execute the seeds
+prisma migrate reset
+
+# reset migrations without executing the seeds
+prisma migrate reset --skip-seed
+
+# execute only seeds
+prisma db seed
+```
+- [Prisma seeds doc](https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding) - learn about seeds in prisma ORM.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
