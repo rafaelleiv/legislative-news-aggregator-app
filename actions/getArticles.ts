@@ -18,6 +18,10 @@ export async function getArticles(searchParams: {
       ].filter((condition) => condition !== null),
     };
 
+    const total = await prisma.article.count({
+      where: whereClause.OR.length > 0 ? whereClause : undefined,
+    });
+
     const articles = await prisma.article.findMany({
       where: whereClause.OR.length > 0 ? whereClause : undefined, // solo aplica el filtro si OR tiene condiciones
       include: {
@@ -40,9 +44,9 @@ export async function getArticles(searchParams: {
       throw new Error('No articles found');
     }
 
-    return articles;
+    return { total, articles };
   } catch (err) {
     console.error(err, 'Error fetching articles');
-    return [];
+    return {};
   }
 }

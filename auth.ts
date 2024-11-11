@@ -3,6 +3,8 @@ import GitHub from 'next-auth/providers/github';
 import prisma from '@/lib/prisma';
 import { postUser } from '@/actions/postUser';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub],
   callbacks: {

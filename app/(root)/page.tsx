@@ -3,15 +3,21 @@ import FastSearchForm from '@/components/FastSearchForm';
 import ArticleList from '@/components/ArticleList';
 import validator from 'validator';
 
+const PAGINATION_SIZE = process.env.NEXT_PUBLIC_PAGINATION_LIMIT;
+
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string }>;
+  searchParams: Promise<{ query?: string; page: string; pageSize: string }>;
 }) {
-  const { query } = (await searchParams) || {};
+  const { query, page, pageSize } = (await searchParams) || {};
 
   // Sanitize the query, topic, and state
   const sanitizedQuery = validator.escape(query || '');
+  const sanitizedPage = validator.isInt(page || '') ? parseInt(page, 10) : 1;
+  const sanitizedPageSize = validator.isInt(pageSize || '')
+    ? parseInt(pageSize, 10)
+    : +(PAGINATION_SIZE || 10);
 
   return (
     <>
@@ -38,6 +44,8 @@ export default async function Home({
         <ArticleList
           searchParams={{
             query: sanitizedQuery,
+            page: sanitizedPage,
+            pageSize: sanitizedPageSize,
           }}
         />
       </section>
