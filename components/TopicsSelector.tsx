@@ -6,22 +6,20 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { updateUserTopics } from '@/services/updateUserTopics';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
-import { useSession } from '@/app/context/SessionContext';
+import { toast } from '@/hooks/use-toast';
 
 interface TopicsSelectorProps {
   topics: Topic[];
   savedTopicsIds: string[];
+  userId: number;
 }
 
 const TopicsSelector: React.FC<TopicsSelectorProps> = ({
   topics,
   savedTopicsIds,
+  userId,
 }) => {
-  const { session } = useSession();
-  if (!session || !session.id) {
-    throw new Error('User is not authenticated');
-  }
-
+  const [originalTopics, setOriginalTopics] = useState(savedTopicsIds);
   const [selectedTopicsIds, setSelectedTopicsIds] =
     useState<string[]>(savedTopicsIds);
   const [savingTopics, setSavingTopics] = useState(false);
@@ -30,8 +28,8 @@ const TopicsSelector: React.FC<TopicsSelectorProps> = ({
   useEffect(() => {
     // Compare the selected topics with the saved topics
     const isDifferent =
-      selectedTopicsIds.length !== savedTopicsIds.length ||
-      selectedTopicsIds.some((id) => !savedTopicsIds.includes(id));
+      selectedTopicsIds.length !== originalTopics.length ||
+      selectedTopicsIds.some((id) => !originalTopics.includes(id));
 
     setIsModified(isDifferent);
   }, [selectedTopicsIds, savedTopicsIds]);
@@ -39,15 +37,28 @@ const TopicsSelector: React.FC<TopicsSelectorProps> = ({
   const handleSave = async () => {
     setSavingTopics(true);
 
-    const res = await updateUserTopics(
-      session.id!,
-      selectedTopicsIds.map(Number)
-    );
+    const res = await updateUserTopics(userId, selectedTopicsIds.map(Number));
     setSavingTopics(false);
+
+    if (res) {
+      toast({
+        title: 'Topics updated',
+        description: 'Your topics have been updated successfully',
+        variant: 'default',
+      });
+      setIsModified(false);
+      setOriginalTopics(selectedTopicsIds);
+    } else {
+      toast({
+        title: 'Error updating topics',
+        description: 'Failed to update your topics',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
-    <div>
+    <>
       <label htmlFor={'topics'} className={'article-form_label'}>
         Topics
       </label>
@@ -88,7 +99,7 @@ const TopicsSelector: React.FC<TopicsSelectorProps> = ({
           Save
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 

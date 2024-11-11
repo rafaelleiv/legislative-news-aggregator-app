@@ -36,6 +36,8 @@ export async function assignFavoriteStatesToUser(
         },
       });
     }
+
+    return userPreferences;
   } catch (error) {
     console.error('Error assigning favorite states:', error);
   }

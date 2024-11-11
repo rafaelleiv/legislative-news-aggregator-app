@@ -1,10 +1,10 @@
-export async function updateUserTopics(userId: number, topicIds: number[]) {
+export async function updateUserStates(userId: number, statesIds: number[]) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/profile/update/topics`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/profile/update/states`;
 
     const data = {
       id: userId,
-      topics: topicIds,
+      states: statesIds,
     };
 
     const res = await fetch(url, {
@@ -17,14 +17,14 @@ export async function updateUserTopics(userId: number, topicIds: number[]) {
 
     if (!res.ok) {
       throw new Error(
-        'Failed to update user topics: unexpected response' +
+        'Failed to update user states: unexpected response' +
           JSON.stringify(res)
       );
     }
 
     return await res.json();
   } catch (error) {
-    console.error('Error updating user topics:', error);
+    console.error('Error updating user states:', error);
     return null;
   }
 }

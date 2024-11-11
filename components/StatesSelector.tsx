@@ -1,38 +1,77 @@
+'use client';
+
 import { MultiSelect } from '@/components/ui/multi-select';
 import { State } from '@/prisma/interfaces';
+import { toast } from '@/hooks/use-toast';
+import { useEffect, useState } from 'react';
+import { updateUserStates } from '@/services/updateUserStates';
+import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 interface StatesSelectorProps {
   states: State[];
-  selectedStates: State[];
-  setSelectedStates: (states: State[]) => void;
-  error?: string[] | string;
+  savedStatesIds: string[];
+  userId: number;
 }
 
 // Server Component para seleccionar estados
-const StatesSelector = async ({
+const StatesSelector = ({
   states,
-  selectedStates,
-  setSelectedStates,
-  error,
+  savedStatesIds,
+  userId,
 }: StatesSelectorProps) => {
-  // const states = await getStates();
+  const [originalStates, setOriginalStates] = useState(savedStatesIds);
+  const [selectedStatesIds, setSelectedStatesIds] =
+    useState<string[]>(savedStatesIds);
+  const [savingStates, setSavingStates] = useState(false);
+  const [isModified, setIsModified] = useState(false);
+
+  useEffect(() => {
+    // Compare the selected States with the saved States
+    const isDifferent =
+      selectedStatesIds.length !== originalStates.length ||
+      selectedStatesIds.some((id: string) => !originalStates.includes(id));
+
+    setIsModified(isDifferent);
+  }, [selectedStatesIds, savedStatesIds]);
+
+  const handleSave = async () => {
+    setSavingStates(true);
+
+    const res = await updateUserStates(userId, selectedStatesIds.map(Number));
+    setSavingStates(false);
+
+    if (res) {
+      toast({
+        title: 'States updated',
+        description: 'Your States have been updated successfully',
+        variant: 'default',
+      });
+      setIsModified(false);
+      setOriginalStates(selectedStatesIds);
+    } else {
+      toast({
+        title: 'Error updating States',
+        description: 'Failed to update your States',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const statesOptions = states.map((state) => ({
     value: state.id.toString(),
     label: state.name,
   }));
 
-  const selectedStatesIds = selectedStates.map((state) => state.id.toString());
-
   const handleStateChange = (stateId: string[]) => {
-    const newStates = states.filter((state) =>
-      stateId.includes(state.id.toString())
-    );
-    setSelectedStates(newStates);
+    const newStates = states
+      .filter((state) => stateId.includes(state.id.toString()))
+      .map((state) => state.id.toString());
+    setSelectedStatesIds(newStates);
   };
 
   return (
-    <div>
+    <>
       <label htmlFor={'states'} className={'article-form_label'}>
         States
       </label>
@@ -45,19 +84,17 @@ const StatesSelector = async ({
           maxCount={2}
         />
       </div>
-      {Array.isArray(error) ? (
-        error.map((err, index) => (
-          <p
-            className={`article-form_error ${index > 0 ? '!-mt-1' : ''}`}
-            key={index}
-          >
-            {err}
-          </p>
-        ))
-      ) : (
-        <p className={'article-form_error'}>{error}</p>
-      )}
-    </div>
+      <div className={'flex justify-end mt-3'}>
+        <Button
+          className={'font-semibold text-white'}
+          onClick={handleSave}
+          disabled={!isModified || savingStates}
+        >
+          {savingStates && <Loader2 className="animate-spin" />}
+          Save
+        </Button>
+      </div>
+    </>
   );
 };
 
