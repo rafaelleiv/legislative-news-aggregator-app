@@ -1,13 +1,23 @@
 {
   "name": "legislative-news-aggregator-app",
-  "type": "module",
   "version": "0.1.0",
+  "description": "Legislative News Aggregator App",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "prepare": "husky",
+    "prisma:migrate": "npx prisma migrate deploy",
+    "prisma:seed": "npx prisma db seed",
+    "prisma:reset": "npx prisma migrate reset --force --skip-seed",
+    "db:setup": "npx prisma generate && npm run prisma:migrate && npm run prisma:seed"
   },
   "packageManager": "npm@10.8.2",
   "overrides": {
@@ -19,7 +29,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
-    "@prisma/client": "^5.22.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
@@ -49,6 +58,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.14",
     "@types/node": "^20.17.6",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
@@ -56,11 +70,20 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.6",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "nodemon": "^3.1.7",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "prisma": "^5.22.0",
+    "@prisma/client": "^5.22.0",
     "prisma-generator-typescript-interfaces": "^1.6.1",
+    "supertest": "^7.0.0",
     "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   },

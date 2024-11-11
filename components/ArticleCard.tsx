@@ -4,6 +4,7 @@ import { formatDate } from '@/lib/utils';
 import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 interface ArticleCardProps {
   article: Article;
@@ -58,7 +59,9 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
           <Link href={`/article/${slug}`}>
             <p className={'article-card_desc'}>{summary}</p>
           </Link>
-          <img src={image || ''} alt={title} className={'article-card_img'} />
+          <div className={'relative w-full h-52'}>
+            <Image src={image || ''} alt={title} className={'article-card_img'} fill />
+          </div>
           <div className={'flex-between mt-5'}>
             <div className={'flex items-center gap-0.5'}>
               {topics &&

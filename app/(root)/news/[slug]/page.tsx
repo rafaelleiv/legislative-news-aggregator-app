@@ -7,12 +7,13 @@ import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import Views from '@/components/Views';
 import { ExternalLink } from 'lucide-react';
+import Image from 'next/image';
 
 export const experimental_ppr = true;
 
 const ArticleDetails = async ({
-  params,
-}: {
+                                params,
+                              }: {
   params: Promise<{
     slug: string;
   }>;
@@ -36,11 +37,12 @@ const ArticleDetails = async ({
 
       <section className={'section_container'}>
         <div className={'flex flex-col md:flex-row'}>
-          <div className={'flex flex-col md:w-1/2'}>
-            <img
+          <div className={'flex flex-col md:w-1/2 relative w-full'}>
+            <Image
               src={article.image || ''}
               alt={article.title}
-              className={'rounded-md'}
+              className={'rounded-md !h-auto'}
+              fill={true}
             />
             {article.link && (
               <Link

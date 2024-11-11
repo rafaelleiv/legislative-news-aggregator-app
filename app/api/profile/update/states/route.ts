@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { assignFavoriteTopicsToUser } from '@/actions/assignFavoriteTopicsToUser';
 import { assignFavoriteStatesToUser } from '@/actions/assignFavoriteStatesToUser';
 
 export async function POST(req: Request) {

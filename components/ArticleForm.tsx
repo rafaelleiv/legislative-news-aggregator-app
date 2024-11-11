@@ -14,6 +14,13 @@ import { toast } from '@/hooks/use-toast';
 import { InputArticle, postArticle } from '@/actions/postArticle';
 import { useRouter } from 'next/navigation';
 
+interface PostArticleResult {
+  status: number;
+  data: {
+    slug: string;
+  };
+}
+
 const ArticleForm = ({
   topics,
   states,
@@ -34,6 +41,7 @@ const ArticleForm = ({
     label: state.name,
   }));
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (prevState: any, formData: FormData) => {
     try {
       const formValues = {
@@ -54,7 +62,7 @@ const ArticleForm = ({
 
       await formSchema.parseAsync(formValues);
 
-      const result = await postArticle(formValues as InputArticle);
+      const result: PostArticleResult = await postArticle(formValues as InputArticle);
       if (result.status === 201) {
         toast({
           title: 'Article created',
@@ -104,7 +112,7 @@ const ArticleForm = ({
   };
 
   const [state, formAction, isPending] = useActionState(handleSubmit, {});
-
+  console.log(state);
   return (
     <form action={formAction} className={'article-form'} noValidate>
       <div>

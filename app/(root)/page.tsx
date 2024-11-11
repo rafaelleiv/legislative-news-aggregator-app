@@ -10,14 +10,16 @@ export default async function Home({
 }: {
   searchParams: Promise<{ query?: string; page: string; pageSize: string }>;
 }) {
-  const { query, page, pageSize } = (await searchParams) || {};
+  const { query, page, pageSize } = await searchParams || {};
 
   // Sanitize the query, topic, and state
   const sanitizedQuery = validator.escape(query || '');
-  const sanitizedPage = validator.isInt(page || '') ? parseInt(page, 10) : 1;
-  const sanitizedPageSize = validator.isInt(pageSize || '')
-    ? parseInt(pageSize, 10)
-    : +(PAGINATION_SIZE || 10);
+  const sanitizedPage =
+    page && validator.isInt(page || '') ? parseInt(page, 10) : 1;
+  const sanitizedPageSize =
+    pageSize && validator.isInt(pageSize)
+      ? parseInt(pageSize, 10)
+      : +(PAGINATION_SIZE || 10);
 
   return (
     <>

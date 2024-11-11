@@ -11,7 +11,7 @@ export async function seedArticles() {
       summary:
         'Jason Kelce said he regrets interacting with the person who taunted him Saturday, saying: “I know now that I shouldn’t have done that.”',
       link: 'https://www.nbcnews.com/pop-culture/pop-culture-news/travis-kelce-says-brother-jason-was-defending-family-phone-smashing-in-rcna178948',
-      views: 580,
+      views: 0,
       image:
         'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1000w,f_auto,q_auto:best/rockcms/2024-09/240910-travis-jason-kelce-ch-0716-974e79.jpg',
       slug: 'travis-kelce-says-brother-jason-was-defending-family-phone-smashing-incident',

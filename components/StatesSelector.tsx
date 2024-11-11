@@ -33,7 +33,7 @@ const StatesSelector = ({
       selectedStatesIds.some((id: string) => !originalStates.includes(id));
 
     setIsModified(isDifferent);
-  }, [selectedStatesIds, savedStatesIds]);
+  }, [originalStates, selectedStatesIds, savedStatesIds]);
 
   const handleSave = async () => {
     setSavingStates(true);

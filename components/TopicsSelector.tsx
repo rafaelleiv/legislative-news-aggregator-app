@@ -32,7 +32,7 @@ const TopicsSelector: React.FC<TopicsSelectorProps> = ({
       selectedTopicsIds.some((id) => !originalTopics.includes(id));
 
     setIsModified(isDifferent);
-  }, [selectedTopicsIds, savedTopicsIds]);
+  }, [originalTopics, selectedTopicsIds, savedTopicsIds]);
 
   const handleSave = async () => {
     setSavingTopics(true);
