@@ -1,12 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { auth, signIn, signOut } from '@/auth';
-import { BadgePlus, LogOut } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getInitials } from '@/lib/utils';
-import { FilterDialog } from '@/components/FilterDialog';
+import { auth, signIn } from '@/auth';
+import { BadgePlus } from 'lucide-react';
 import { Button } from './ui/button';
+import { UserNavBar } from '@/components/UserNavBar';
 
 const Navbar = async () => {
   const session = await auth();
@@ -33,32 +31,13 @@ const Navbar = async () => {
         <div className={'flex items-center gap-5 text-black'}>
           {session && session.user ? (
             <>
-              <Link href={'/news/create'}>
-                <span className={'max-sm:hidden'}>Create</span>
-                <BadgePlus className={'size-6 sm:hidden'} />
-              </Link>
-              <FilterDialog />
-              <form
-                className={'flex items-center'}
-                action={async () => {
-                  'use server';
-
-                  await signOut({ redirectTo: '/' });
-                }}
-              >
-                <button type={'submit'}>
-                  <span className={'max-sm:hidden'}>Logout</span>
-                  <LogOut className={'size-6 sm:hidden text-red-500'} />
-                </button>
-              </form>
-              <Link href={`/user/${session?.user?.id}`}>
-                <Avatar className={'size-10'}>
-                  <AvatarImage src={session?.user?.image || ''} />
-                  <AvatarFallback>
-                    {getInitials(session?.user?.name || '')}
-                  </AvatarFallback>
-                </Avatar>
-              </Link>
+              <Button asChild className={'bg-white hover:bg-white-100'}>
+                <Link href={'/news/create'}>
+                  <BadgePlus className={'size-6'} />
+                  <span className={'max-sm:hidden'}>Create</span>
+                </Link>
+              </Button>
+              <UserNavBar />
             </>
           ) : (
             <>

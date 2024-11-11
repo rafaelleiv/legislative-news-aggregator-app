@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react';
-import { getArticleBySlug } from '@/services/getArticleBySlug';
+import { getArticleBySlug } from '@/actions/getArticleBySlug';
 import { notFound } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
 import CardInfoContent from '@/components/CardInfoContent';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import Views from '@/components/Views';
+import { ExternalLink } from 'lucide-react';
 
 export const experimental_ppr = true;
 
@@ -39,17 +40,18 @@ const ArticleDetails = async ({
             <img
               src={article.image || ''}
               alt={article.title}
-              className={'rounded-xl'}
+              className={'rounded-md'}
             />
             {article.link && (
-              <Link href={article.link} target={'_blank'}>
-                <p
-                  className={
-                    'mt-5 text-center text-white bg-primary py-2 px-4 rounded-md'
-                  }
-                >
-                  Read more
-                </p>
+              <Link
+                href={article.link}
+                target={'_blank'}
+                className={
+                  'flex justify-center items-center gap-3  mt-5 text-center text-white bg-primary py-3 px-4 rounded-md'
+                }
+              >
+                Read more
+                <ExternalLink />
               </Link>
             )}
           </div>

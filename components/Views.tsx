@@ -1,8 +1,8 @@
 import React from 'react';
 import Ping from '@/components/Ping';
-import { getArticleViewsById } from '@/services/getArticleViewsById';
+import { getArticleViewsById } from '@/actions/getArticleViewsById';
 import { unstable_after as after } from 'next/server';
-import { patchArticleViews } from '@/services/patchArticleViews';
+import { patchArticleViews } from '@/actions/patchArticleViews';
 
 const Views = async ({ id }: { id: string }) => {
   const views = await getArticleViewsById(parseInt(id));

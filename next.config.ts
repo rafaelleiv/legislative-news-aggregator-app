@@ -6,6 +6,16 @@ const nextConfig: NextConfig = {
     // ppr: 'incremental',
     after: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   // devIndicators: {
   //   appIsrStatus: true,
   //   buildActivity: true,

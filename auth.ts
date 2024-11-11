@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import prisma from '@/lib/prisma';
+import { postUser } from '@/actions/postUser';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub],
@@ -15,13 +16,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       });
 
       if (!existingUser) {
-        await prisma.user.create({
-          data: {
-            email: email,
-            name: name,
-            image: image,
-          },
-        });
+        await postUser({ email, name, image });
       }
 
       return true;

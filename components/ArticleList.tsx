@@ -1,6 +1,6 @@
 import React from 'react';
 import ArticleCard from '@/components/ArticleCard';
-import { getArticles } from '@/services/getArticles';
+import { getArticles } from '@/actions/getArticles';
 
 const ArticleList = async ({
   searchParams,

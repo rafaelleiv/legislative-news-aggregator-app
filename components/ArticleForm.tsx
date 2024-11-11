@@ -11,7 +11,7 @@ import { formSchema } from '@/lib/validation';
 import { z } from 'zod';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { toast } from '@/hooks/use-toast';
-import { InputArticle, postArticle } from '@/services/postArticle';
+import { InputArticle, postArticle } from '@/actions/postArticle';
 import { useRouter } from 'next/navigation';
 
 const ArticleForm = ({
@@ -36,7 +36,6 @@ const ArticleForm = ({
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     try {
-      console.log('entered to handle submit');
       const formValues = {
         title: formData.get('title') as string,
         summary: formData.get('summary') as string,
@@ -52,8 +51,6 @@ const ArticleForm = ({
         link: formData.get('link') as string,
         publishedAt: new Date(),
       };
-
-      console.log(formValues);
 
       await formSchema.parseAsync(formValues);
 

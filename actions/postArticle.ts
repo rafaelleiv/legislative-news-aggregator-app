@@ -31,7 +31,6 @@ export async function postArticle(article: InputArticle) {
 
   const { title, summary, link, topics, image, states } = article;
   const slug = slugify(title as string, { lower: true, strict: true });
-  console.log(session);
   const data = {
     title: title,
     summary: summary,
@@ -53,8 +52,6 @@ export async function postArticle(article: InputArticle) {
     },
     authorName: session.user.name,
   };
-
-  console.log('entered to post article', data);
   try {
     const newArticle = await prisma.article.create({
       data: data,

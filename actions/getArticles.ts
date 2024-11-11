@@ -15,12 +15,6 @@ export async function getArticles(searchParams: {
         query ? { slug: { contains: query.toLowerCase() } } : null,
         query ? { states: { some: { name: query } } } : null,
         query ? { topics: { some: { name: query } } } : null,
-        // searchParams.state
-        //   ? { states: { some: { name: searchParams.state } } }
-        //   : null,
-        // searchParams.topic
-        //   ? { topics: { some: { name: searchParams.topic } } }
-        //   : null,
       ].filter((condition) => condition !== null),
     };
 

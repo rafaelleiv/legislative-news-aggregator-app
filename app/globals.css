@@ -106,7 +106,7 @@
 
     /* idea details */
     .divider {
-        @apply border-dotted bg-zinc-400 max-w-4xl my-10 mx-auto;
+        @apply border-dotted bg-zinc-200 max-w-4xl my-2 mx-auto;
     }
 
     .view_skeleton {
