@@ -10,6 +10,12 @@ COPY package*.json ./
 # Copy all files from the current directory to the working directory
 COPY . .
 
+# Copy wait-for-it.sh to a directory unaffected by volumes
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+
+# Ensure wait-for-it.sh has execution permissions
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
 # Install dependencies specified in package.json
 RUN npm install
 

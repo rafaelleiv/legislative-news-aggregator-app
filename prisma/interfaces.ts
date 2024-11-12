@@ -14,6 +14,7 @@ export interface Article {
   views: number;
   image: string | null;
   slug: string;
+  source: string | null;
 }
 
 export interface State {
@@ -46,4 +47,11 @@ export interface UserPreferences {
   savedStates?: State[];
   savedTopics?: Topic[];
   user?: User;
+}
+
+export interface JobState {
+  id: number;
+  name: string;
+  lastPublishedAt: Date | null;
+  updatedAt: Date;
 }

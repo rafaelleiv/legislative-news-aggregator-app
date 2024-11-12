@@ -33,6 +33,7 @@ model Article {
   views       Int      @default(0)
   image       String?
   slug        String   @unique
+  source      String?
 }
 
 model State {
@@ -65,4 +66,11 @@ model UserPreferences {
   savedStates State[]
   savedTopics Topic[]
   user        User    @relation(fields: [userId], references: [id])
+}
+
+model JobState {
+  id              Int       @id @default(autoincrement())
+  name            String    @unique
+  lastPublishedAt DateTime?
+  updatedAt       DateTime  @updatedAt
 }
