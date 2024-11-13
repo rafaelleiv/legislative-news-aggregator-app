@@ -21,7 +21,6 @@ const ArticleDetails = async ({
   const { slug } = await params;
 
   const article = await getArticleBySlug(slug);
-  console.log(article);
   if (!article) {
     return notFound();
   }

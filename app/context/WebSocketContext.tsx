@@ -1,12 +1,6 @@
 'use client';
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { Article } from '@/prisma/interfaces';
 import { toast } from '@/hooks/use-toast';
@@ -48,7 +42,6 @@ export const WebSocketProvider: React.FC<{
     );
 
     socketRef.current.on('connect', () => {
-      console.log('Connected to WebSocket');
       // Subscribe to the topics
       topics.forEach((topic) => {
         socketRef.current?.emit('subscribeToTopic', topic);

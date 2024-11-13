@@ -15,7 +15,7 @@ import { auth, signOut } from '@/auth';
 import { LogOut, User } from 'lucide-react';
 import Link from 'next/link';
 
-export async function UserNavBar() {
+export async function NavBarUserOptions() {
   const session = await auth();
 
   return (

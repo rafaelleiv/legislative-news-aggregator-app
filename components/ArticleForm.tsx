@@ -114,8 +114,8 @@ const ArticleForm = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, formAction, isPending] = useActionState(handleSubmit, {});
-  console.log(state);
   return (
     <form action={formAction} className={'article-form'} noValidate>
       <div>

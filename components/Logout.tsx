@@ -13,7 +13,6 @@ const Logout = () => {
     >
       <button type={'submit'}>
         <span>Logout</span>
-        {/*<LogOut className={'size-6 sm:hidden text-red-500'} />*/}
       </button>
     </form>
   );

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { auth, signOut } from '@/auth';
+import { auth } from '@/auth';
 import { getUser } from '@/actions/getUser';
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
@@ -22,8 +22,7 @@ const Page = async () => {
 
   if (!currentUser) {
     console.error('User not found');
-    await signOut({ redirectTo: '/' });
-    return;
+    redirect('/');
   }
 
   // Execute both promises concurrently
@@ -79,4 +78,7 @@ const Page = async () => {
     </section>
   );
 };
+
 export default Page;
+
+
