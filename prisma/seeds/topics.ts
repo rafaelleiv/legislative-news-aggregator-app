@@ -3,36 +3,29 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const topics = [
+  { name: 'General' },
   { name: 'Politics' },
   { name: 'Economy' },
   { name: 'Education' },
   { name: 'Health' },
-  { name: 'Environment' },
+  { name: 'Entertainment' },
   { name: 'Sports' },
   { name: 'Technology' },
-  { name: 'Transportation' },
-  { name: 'Public Safety' },
-  { name: 'Housing' },
-  { name: 'Civil Rights' },
-  { name: 'Agriculture' },
-  { name: 'Energy' },
-  { name: 'Labor' },
-  { name: 'Immigration' },
-  { name: 'Infrastructure' },
-  { name: 'Welfare' },
-  { name: 'Criminal Justice' },
-  { name: 'Social Services' },
-  { name: 'Urban Development' },
-  { name: 'Rural Affairs' },
+  { name: 'Business' },
+  { name: 'Science' },
 ];
 
 export async function seedTopics() {
+  // Clean the table before inserting seeds
+  await prisma.topic.deleteMany({});
+
   for (const topic of topics) {
+    const normalizedTopic = topic.name.toLowerCase();
     await prisma.topic.upsert({
-      where: { name: topic.name },
+      where: { name: normalizedTopic },
       update: {},
       create: {
-        name: topic.name,
+        name: normalizedTopic,
       },
     });
   }

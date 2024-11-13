@@ -2,6 +2,7 @@ import React from 'react';
 import FastSearchForm from '@/components/FastSearchForm';
 import ArticleList from '@/components/ArticleList';
 import validator from 'validator';
+import IncomingArticles from '@/components/IncomingArticles';
 
 const PAGINATION_SIZE = process.env.NEXT_PUBLIC_PAGINATION_LIMIT;
 
@@ -10,7 +11,7 @@ export default async function Home({
 }: {
   searchParams: Promise<{ query?: string; page: string; pageSize: string }>;
 }) {
-  const { query, page, pageSize } = await searchParams || {};
+  const { query, page, pageSize } = (await searchParams) || {};
 
   // Sanitize the query, topic, and state
   const sanitizedQuery = validator.escape(query || '');
@@ -35,6 +36,8 @@ export default async function Home({
 
         <FastSearchForm query={sanitizedQuery} />
       </section>
+
+      <IncomingArticles />
 
       <section className="section_container">
         <p className={'text-30-semibold'}>

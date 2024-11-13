@@ -7,7 +7,7 @@ export async function seedArticles() {
     {
       title:
         'Travis Kelce says brother Jason was defending his family in phone-smashing incident',
-      publishedAt: new Date(),
+      publishedAt: new Date(Date.now() - 86400000),
       summary:
         'Jason Kelce said he regrets interacting with the person who taunted him Saturday, saying: “I know now that I shouldn’t have done that.”',
       link: 'https://www.nbcnews.com/pop-culture/pop-culture-news/travis-kelce-says-brother-jason-was-defending-family-phone-smashing-in-rcna178948',

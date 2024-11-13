@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
-import { auth } from '@/auth';
+import { auth, signOut } from '@/auth';
 import { getUser } from '@/actions/getUser';
-import { notFound, redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import { getTopics } from '@/services/getTopics';
 import { getStates } from '@/services/getStates';
@@ -21,7 +21,9 @@ const Page = async () => {
   const currentUser = await getUser(session.id);
 
   if (!currentUser) {
-    return notFound();
+    console.error('User not found');
+    await signOut({ redirectTo: '/' });
+    return;
   }
 
   // Execute both promises concurrently

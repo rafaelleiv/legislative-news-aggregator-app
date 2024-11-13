@@ -7,7 +7,7 @@ import {
   WandSparkles,
 } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { capitalizeFirstLetter, cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -137,7 +137,7 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
                         {IconComponent && (
                           <IconComponent className="h-4 w-4 mr-2" />
                         )}
-                        {option?.label}
+                        {capitalizeFirstLetter(option?.label || '')}
                         <button
                           onClick={(event) => {
                             event.stopPropagation();
@@ -247,7 +247,7 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
                       {option.icon && (
                         <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                       )}
-                      <span>{option.label}</span>
+                      <span>{capitalizeFirstLetter(option.label)}</span>
                     </CommandItem>
                   );
                 })}

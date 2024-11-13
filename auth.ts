@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import prisma from '@/lib/prisma';
 import { postUser } from '@/actions/postUser';
+import { UserPreferences } from '@/prisma/interfaces';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
@@ -33,6 +34,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       profile: { id: string; email: string };
     }) {
       if (account && profile) {
+        console.log('account:', account);
+        console.log('profile:', profile);
         const user = await prisma.user.findUnique({
           where: { email: profile.email },
         });
@@ -46,10 +49,38 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session,
       token,
     }: {
-      session: { id: string };
+      session: {
+        id: string;
+        user: {
+          name: string;
+          email: string;
+          image: string;
+          preferences?: UserPreferences;
+        };
+      };
       token: { id: string };
     }) {
-      Object.assign(session, { id: token.id });
+      const user = await prisma.user.findUnique({
+        where: { id: parseInt(token.id) }, // Convertimos token.id a número si es una cadena
+        select: {
+          preferences: {
+            select: {
+              savedTopics: true, // Include savedTopics if you need them too
+              savedStates: true, // Include savedStates if you need them too
+            },
+          },
+        },
+      });
+
+      // Add user preferences to the session
+      Object.assign(session, {
+        id: token.id,
+        user: {
+          ...session.user,
+          preferences: user?.preferences || {},
+        },
+      });
+
       return session;
     },
   },

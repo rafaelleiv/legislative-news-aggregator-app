@@ -5,6 +5,8 @@ import React from 'react';
 import { Toaster } from '@/components/ui/toaster';
 import { auth } from '@/auth';
 import { SessionProvider } from '@/app/context/SessionContext';
+import { WebSocketProvider } from '@/app/context/WebSocketContext';
+import { Topic } from '@/prisma/interfaces';
 
 const workSans = localFont({
   src: [
@@ -68,14 +70,19 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  const topics: string[] = session?.user?.preferences?.savedTopics?.map(
+    (t: Topic) => t.name
+  ) || ['general'];
 
   return (
     <html lang="en">
       <SessionProvider session={session}>
-        <body className={workSans.variable}>
-          {children}
-          <Toaster />
-        </body>
+        <WebSocketProvider topics={topics}>
+          <body className={workSans.variable}>
+            {children}
+            <Toaster />
+          </body>
+        </WebSocketProvider>
       </SessionProvider>
     </html>
   );

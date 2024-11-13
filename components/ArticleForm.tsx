@@ -58,11 +58,14 @@ const ArticleForm = ({
         image: formData.get('image') as string,
         link: formData.get('link') as string,
         publishedAt: new Date(),
+        source: 'Non official',
       };
 
       await formSchema.parseAsync(formValues);
 
-      const result: PostArticleResult = await postArticle(formValues as InputArticle);
+      const result: PostArticleResult = await postArticle(
+        formValues as InputArticle
+      );
       if (result.status === 201) {
         toast({
           title: 'Article created',

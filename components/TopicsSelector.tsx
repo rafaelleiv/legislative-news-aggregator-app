@@ -7,6 +7,7 @@ import { updateUserTopics } from '@/services/updateUserTopics';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { capitalizeFirstLetter } from '@/lib/utils';
 
 interface TopicsSelectorProps {
   topics: Topic[];
@@ -83,7 +84,7 @@ const TopicsSelector: React.FC<TopicsSelectorProps> = ({
                       : ''
                   }`}
                 >
-                  {topic.name}
+                  {capitalizeFirstLetter(topic.name)}
                 </span>
               </ToggleGroupItem>
             ))}

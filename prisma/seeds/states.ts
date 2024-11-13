@@ -56,14 +56,18 @@ const states = [
 ];
 
 export async function seedStates() {
+  // Clean the table before inserting seeds
+  await prisma.state.deleteMany({});
+
   for (const state of states) {
+    const normalizedState = state.name.toLowerCase();
     await prisma.state.upsert({
-      where: { name: state.name },
+      where: { name: normalizedState },
       update: {
         code: state.code,
       },
       create: {
-        name: state.name,
+        name: normalizedState,
         code: state.code,
       },
     });

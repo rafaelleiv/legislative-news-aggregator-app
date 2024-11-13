@@ -30,6 +30,7 @@ export interface Topic {
   name: string;
   articles?: Article[];
   userPreferences?: UserPreferences[];
+  jobStates?: JobState[];
 }
 
 export interface User {
@@ -53,5 +54,11 @@ export interface JobState {
   id: number;
   name: string;
   lastPublishedAt: Date | null;
+  page: number | null;
+  pageSize: number | null;
+  interval: string;
+  isActive: boolean;
+  topicId: number | null;
+  topic?: Topic | null;
   updatedAt: Date;
 }

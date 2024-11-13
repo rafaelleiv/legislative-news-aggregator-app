@@ -1,6 +1,6 @@
 import React from 'react';
 import { Article } from '@/prisma/interfaces';
-import { formatDate } from '@/lib/utils';
+import { capitalizeFirstLetter, formatDate } from '@/lib/utils';
 import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -29,18 +29,26 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
       <div className={'flex-between'}>
         <div className={'flex-col'}>
           <p className={'article_card_date'}>{formatDate(publishedAt)}</p>
-          {states?.map((state, index) => (
-            <React.Fragment key={state.id}>
-              {index < 2 ? (
-                <Link
-                  href={{ pathname: '/', query: { query: state.name } }}
-                  title={state.name}
-                >
-                  <span className={'text-12-light mr-2'}>{state.name}</span>
-                </Link>
-              ) : null}
-            </React.Fragment>
-          ))}
+          {states && states.length > 0 ? (
+            states?.map((state, index) => (
+              <React.Fragment key={state.id}>
+                {index < 2 ? (
+                  <Link
+                    href={{ pathname: '/', query: { query: state.name } }}
+                    title={state.name}
+                  >
+                    <span className={'text-12-light mr-2'}>
+                      {capitalizeFirstLetter(state.name)}
+                    </span>
+                  </Link>
+                ) : null}
+              </React.Fragment>
+            ))
+          ) : article.source ? (
+            <span className={'text-12-light'}>{article.source}</span>
+          ) : (
+            <span>&nbsp;</span>
+          )}
           {states && states?.length > 2 && <span>...</span>}
         </div>
         <div className={'flex gap-1.5 items-center self-start'}>
@@ -60,7 +68,13 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
             <p className={'article-card_desc'}>{summary}</p>
           </Link>
           <div className={'relative w-full h-52'}>
-            <Image src={image || ''} alt={title} className={'article-card_img'} fill />
+            <Image
+              src={image || (null as never)}
+              alt={title}
+              className={'article-card_img'}
+              fill
+              sizes={'(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw'}
+            />
           </div>
           <div className={'flex-between mt-5'}>
             <div className={'flex items-center gap-0.5'}>
@@ -72,7 +86,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
                       href={{ pathname: '/', query: { query: topic.name } }}
                     >
                       <span className={'text-14-normal-black'}>
-                        {topic.name}
+                        {capitalizeFirstLetter(topic.name)}
                       </span>
                     </Link>
                     {index < topics.length - 1 && (

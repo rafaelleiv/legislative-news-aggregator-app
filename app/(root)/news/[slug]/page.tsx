@@ -12,8 +12,8 @@ import Image from 'next/image';
 export const experimental_ppr = true;
 
 const ArticleDetails = async ({
-                                params,
-                              }: {
+  params,
+}: {
   params: Promise<{
     slug: string;
   }>;
@@ -21,7 +21,7 @@ const ArticleDetails = async ({
   const { slug } = await params;
 
   const article = await getArticleBySlug(slug);
-
+  console.log(article);
   if (!article) {
     return notFound();
   }
@@ -37,27 +37,32 @@ const ArticleDetails = async ({
 
       <section className={'section_container'}>
         <div className={'flex flex-col md:flex-row'}>
-          <div className={'flex flex-col md:w-1/2 relative w-full'}>
-            <Image
-              src={article.image || ''}
-              alt={article.title}
-              className={'rounded-md !h-auto'}
-              fill={true}
-            />
-            {article.link && (
-              <Link
-                href={article.link}
-                target={'_blank'}
-                className={
-                  'flex justify-center items-center gap-3  mt-5 text-center text-white bg-primary py-3 px-4 rounded-md'
-                }
-              >
-                Read more
-                <ExternalLink />
-              </Link>
-            )}
+          <div className={'flex-1 flex-col'}>
+            <div className={'flex flex-col'}>
+              <div className={'relative w-full h-52 md:h-80'}>
+                <Image
+                  src={article.image || ''}
+                  alt={article.title}
+                  className={'rounded-md object-cover'}
+                  fill={true}
+                />
+              </div>
+              {article.link && (
+                <div className={'mt-5 flex justify-center'}>
+                  <Link
+                    href={article.link}
+                    target={'_blank'}
+                    className={
+                      'flex flex-1 justify-center items-center gap-3 text-center text-white bg-primary py-3 px-4 rounded-md'
+                    }
+                  >
+                    Read more
+                    <ExternalLink />
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
-
           <div className={'flex-1 flex-col flex gap-3 mt-5 md:mt-0 md:ml-5'}>
             <CardInfoContent heading={'Topics'}>
               <>
