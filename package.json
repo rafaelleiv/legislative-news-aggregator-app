@@ -14,7 +14,7 @@
     "test:watch": "jest --watch",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "prepare": "husky",
-    "prisma:migrate": "npx prisma migrate dev --name init && npx prisma migrate deploy",
+    "prisma:migrate": "npx prisma migrate deploy",
     "prisma:seed": "npx prisma db seed",
     "prisma:reset": "npx prisma migrate reset --force --skip-seed",
     "db:setup": "npx prisma generate && npm run prisma:migrate && npm run prisma:seed"
