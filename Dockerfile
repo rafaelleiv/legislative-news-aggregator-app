@@ -14,7 +14,7 @@ COPY . .
 COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
 
 # Ensure wait-for-it.sh has execution permissions
-RUN chmod +x /usr/local/bin/wait-for-it.sh
+#RUN chmod +x /usr/local/bin/wait-for-it.sh
 
 # Install dependencies specified in package.json
 RUN npm install
