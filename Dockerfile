@@ -11,7 +11,7 @@ COPY package*.json ./
 COPY . .
 
 # Copy wait-for-it.sh to a directory unaffected by volumes
-COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+#COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
 
 # Ensure wait-for-it.sh has execution permissions
 #RUN chmod +x /usr/local/bin/wait-for-it.sh
