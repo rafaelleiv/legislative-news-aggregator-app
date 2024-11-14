@@ -12,8 +12,9 @@ const Navbar = async () => {
             <Image
               src={'/logo.png'}
               alt={'Logo'}
-              width={50}
-              height={30}
+              height={0}
+              width={0}
+              style={{ width: '50px', height: 'auto' }}
               priority
             />
 

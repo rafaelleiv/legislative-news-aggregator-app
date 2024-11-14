@@ -2,11 +2,12 @@ import React, { Suspense } from 'react';
 import { auth } from '@/auth';
 import { getUser } from '@/actions/getUser';
 import { redirect } from 'next/navigation';
-import Image from 'next/image';
 import { getTopics } from '@/services/getTopics';
 import { getStates } from '@/services/getStates';
 import TopicsSelector from '@/components/TopicsSelector';
 import StatesSelector from '@/components/StatesSelector';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { getInitials } from '@/lib/utils';
 
 const Page = async () => {
   const session = await auth();
@@ -17,6 +18,7 @@ const Page = async () => {
   }
 
   const currentUser = await getUser(session.id);
+  console.log('currentUser', currentUser);
 
   if (!currentUser) {
     console.error('User not found');
@@ -42,13 +44,20 @@ const Page = async () => {
             </h3>
           </div>
 
-          <Image
-            src={currentUser.image || ''}
-            alt={currentUser.name || ''}
-            width={220}
-            height={220}
-            className={'profile_image'}
-          />
+          {/*<Image*/}
+          {/*  src={currentUser.image || ''}*/}
+          {/*  alt={currentUser.name || ''}*/}
+          {/*  width={220}*/}
+          {/*  height={220}*/}
+          {/*  className={'profile_image'}*/}
+          {/*/>*/}
+
+          <Avatar className={'profile_image size-20'}>
+            <AvatarImage src={currentUser?.image || ''} />
+            <AvatarFallback>
+              {getInitials(currentUser?.name || '')}
+            </AvatarFallback>
+          </Avatar>
 
           <p className={'text-30-extrabold mt-7 text-center'}>
             {currentUser.email}

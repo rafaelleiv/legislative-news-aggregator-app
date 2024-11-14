@@ -78,7 +78,7 @@ export default async function RootLayout({
     <html lang="en">
       <SessionProvider session={session}>
         <WebSocketProvider topics={topics}>
-          <body className={workSans.variable}>
+          <body className={workSans.variable} suppressHydrationWarning>
             {children}
             <Toaster />
           </body>

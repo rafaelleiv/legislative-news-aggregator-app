@@ -55,6 +55,7 @@ model Topic {
 model User {
   id          Int              @id @default(autoincrement())
   email       String           @unique
+  password    String? // Optional: only used for users with password-based authentication
   name        String?
   image       String?
   preferences UserPreferences?

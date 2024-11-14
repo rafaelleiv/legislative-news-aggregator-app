@@ -18,9 +18,13 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## !! Important !!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Use this credential to log in manual
+email = 'johndoe@example.com'
+password = 'test123'
+
+Using a seed file, the user will be created with the email and password above.
 
 ## Prisma and Database Management
 
@@ -73,6 +77,8 @@ To enhance the search experience:
 - **Indexed Fields**: Indexed fields (e.g., topics, states, and publication dates) allow users to quickly filter and search through large datasets.
 - **Pagination**: For large datasets, results are paginated to ensure that users can navigate the content without overloading the interface.
 - **Full-Text Search**: For optimal search functionality, a full-text search mechanism can be implemented with Prisma for more advanced, user-friendly querying.
+
+To filter by Topic or State, click on them in any article.
 
 ### Performance and Caching
 
@@ -167,3 +173,10 @@ AUTH_GITHUB_SECRET=""
 The easiest way to deploy this Next.js app is through [Vercel](https://vercel.com), which offers seamless deployment for Next.js projects.
 
 Check out the [Next.js deployment documentation](https://nextjs.org/docs
+
+## Known Issues
+There is an issue when trying to log in manually with wrong credentials,
+the error is not being captured.
+It seems an issue of the library used for authentication authjs.dev in the last version.
+And it's getting hard to resolve it.
+This is a known issue and will be fixed in the next release.

@@ -36,6 +36,7 @@ export interface Topic {
 export interface User {
   id: number;
   email: string;
+  password: string | null;
   name: string | null;
   image: string | null;
   preferences?: UserPreferences | null;

@@ -3,13 +3,17 @@ import { User } from '@/prisma/interfaces';
 
 export async function getUser(id: string): Promise<User | null> {
   try {
-    const res = prisma.user.findUnique({
+    const res = await prisma.user.findUnique({
       where: {
         id: +id,
       },
-      include: {
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        image: true,
         preferences: {
-          include: {
+          select: {
             savedTopics: true,
             savedStates: true,
           },
@@ -22,7 +26,10 @@ export async function getUser(id: string): Promise<User | null> {
       return null;
     }
 
-    return res;
+    return {
+      ...res,
+      password: null,
+    } as User;
   } catch (err) {
     console.error(err, 'Error fetching user');
     return null;

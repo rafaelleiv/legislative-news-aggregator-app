@@ -1,5 +1,6 @@
-import { clsx, type ClassValue } from 'clsx';
+import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import crypto from 'crypto';
 
 /**
  * Combines class names using `clsx` and merges them using `twMerge`.
@@ -51,4 +52,41 @@ export function parseServerActionResponse<T>(response: T) {
 
 export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+/**
+ * Generates a salted hash for a given password.
+ * @param {string} password - The plain text password to hash.
+ * @returns {string} The salted hash in the format `salt:hash`.
+ */
+export function saltAndHashPassword(password: string): string {
+  // Generate a random salt
+  const salt = crypto.randomBytes(16).toString('hex');
+
+  // Create a hash of the password and salt
+  const hash = crypto
+    .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
+    .toString('hex');
+
+  // Return the salt and hash as a single string
+  return `${salt}:${hash}`;
+}
+
+/**
+ * Verifies a password against a stored salted hash.
+ * @param {string} password - The plain text password to verify.
+ * @param {string} storedHash - The stored salted hash in the format `salt:hash`.
+ * @returns {boolean} True if the password matches the hash, false otherwise.
+ */
+export function verifyPassword(password: string, storedHash: string): boolean {
+  // Split the stored hash to retrieve the salt
+  const [salt, originalHash] = storedHash.split(':');
+
+  // Generate a hash from the provided password using the same salt
+  const hash = crypto
+    .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
+    .toString('hex');
+
+  // Compare the generated hash with the original hash
+  return hash === originalHash;
 }

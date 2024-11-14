@@ -29,32 +29,33 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
       <div className={'flex-between'}>
         <div className={'flex-col'}>
           <p className={'article_card_date'}>{formatDate(publishedAt)}</p>
-          {states && states.length > 0 ? (
-            states?.map((state, index) => (
+        </div>
+        <div className={'flex gap-1.5 items-center self-start'}>
+          <EyeIcon className={'size-6 text-primary'} />
+          <span className={'text-16-medium'}>{views}</span>
+        </div>
+      </div>
+      <div className={'flex-between mt-3'}>
+        <div>
+          {states &&
+            states.length > 0 &&
+            states?.slice(0, 2).map((state, index) => (
               <React.Fragment key={state.id}>
                 {index < 2 ? (
                   <Link
                     href={{ pathname: '/', query: { query: state.name } }}
                     title={state.name}
                   >
-                    <span className={'text-12-light mr-2'}>
-                      {capitalizeFirstLetter(state.name)}
-                    </span>
+                        <span className={'text-12-light mr-2'}>
+                          {capitalizeFirstLetter(state.name)}
+                        </span>
                   </Link>
                 ) : null}
               </React.Fragment>
-            ))
-          ) : article.source ? (
-            <span className={'text-12-light'}>{article.source}</span>
-          ) : (
-            <span>&nbsp;</span>
-          )}
+            ))}
           {states && states?.length > 2 && <span>...</span>}
         </div>
-        <div className={'flex gap-1.5 items-center self-start'}>
-          <EyeIcon className={'size-6 text-primary'} />
-          <span className={'text-16-medium'}>{views}</span>
-        </div>
+        {article.source && <span className={'text-12-light'}>{article.source}</span>}
       </div>
       <div className={'flex-between mt-5 gap-5'}>
         <div className={'flex-1'}>
