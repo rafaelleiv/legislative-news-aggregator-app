@@ -8,8 +8,6 @@ import { getStates } from '@/services/getStates';
 import TopicsSelector from '@/components/TopicsSelector';
 import StatesSelector from '@/components/StatesSelector';
 
-export const experimental_ppr = true;
-
 const Page = async () => {
   const session = await auth();
 

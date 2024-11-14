@@ -1,12 +1,8 @@
 import React from 'react';
-import { auth, signIn } from '@/auth';
+import { signIn } from '@/auth';
 import { Button } from '@/components/ui/button';
 
 const LoginForm = () => {
-  const session = auth();
-  console.log(session);
-  console.log(session?.status);
-
   return (
     <>
       <form
